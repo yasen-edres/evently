@@ -1,0 +1,147 @@
+import 'package:events/home/taps/home/widget/event_item.dart';
+import 'package:events/home/taps/home/widget/event_tab_item.dart';
+import 'package:events/l10n/app_localizations.dart';
+import 'package:events/utils/appAssets.dart';
+import 'package:events/utils/app_colors.dart';
+import 'package:events/utils/app_styles.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class HomeTap extends StatefulWidget {
+  HomeTap({super.key});
+
+  @override
+  State<HomeTap> createState() => _HomeTapState();
+}
+
+class _HomeTapState extends State<HomeTap> {
+  int selectedIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+    List<String> eventsNameList = [
+      AppLocalizations.of(context)!.sport,
+      AppLocalizations.of(context)!.birthday,
+      AppLocalizations.of(context)!.meeting,
+      AppLocalizations.of(context)!.gaming,
+      AppLocalizations.of(context)!.workShop,
+      AppLocalizations.of(context)!.book_club,
+      AppLocalizations.of(context)!.exhibition,
+      AppLocalizations.of(context)!.holiday,
+      AppLocalizations.of(context)!.eating,
+    ];
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.welcome_back,
+                  style: AppStyle.regular14White,
+                ),
+                Text("Route Academy", style: AppStyle.bold24White),
+              ],
+            ),
+            Row(
+              children: [
+                Image.asset(AppAsset.iconTheme),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: width * 0.02,
+                    vertical: height * 0.01,
+                  ),
+                  margin: EdgeInsetsDirectional.only(start: width * 0.02),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppColor.whiteColor,
+                  ),
+                  child: Text("EN", style: AppStyle.bold14primary),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      body: Column(
+        children: [
+          Container(
+            height: height * 0.12,
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(24),
+                bottomRight: Radius.circular(24),
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: width * 0.04,
+                vertical: height * 0.01,
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Image.asset(AppAsset.unSelectedIconMap),
+                      SizedBox(width: width * 0.02),
+                      Text("Cairo , Egypt", style: AppStyle.medium14White),
+                    ],
+                  ),
+                  DefaultTabController(
+                    length: eventsNameList.length,
+                    child: TabBar(
+                      onTap: (index) {
+                        selectedIndex = index;
+                        setState(() {});
+                      },
+                      isScrollable: true,
+                      labelPadding: EdgeInsets.zero,
+                      tabAlignment: TabAlignment.start,
+                      indicatorColor: AppColor.transparentColor,
+                      dividerColor: AppColor.transparentColor,
+                      tabs: eventsNameList
+                          .map(
+                            (e) => EventTabItem(
+                              borderColor: Theme.of(context).focusColor,
+                              selectedBgColor: Theme.of(context).focusColor,
+                              selectedTextStyle: Theme.of(
+                                context,
+                              ).textTheme.headlineMedium!,
+                              unSelectedTextStyle: AppStyle.medium16White,
+                              isSelected:
+                                  selectedIndex == eventsNameList.indexOf(e),
+                              eventName: e,
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.separated(
+              padding: EdgeInsets.symmetric(
+                horizontal: width * 0.04,
+                vertical: height * 0.02,
+              ),
+              itemBuilder: (context, index) {
+                return EventItem();
+              },
+              itemCount: 20,
+              separatorBuilder: (context, index) =>
+                  SizedBox(height: height * 0.02),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
