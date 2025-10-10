@@ -5,7 +5,6 @@ import 'package:events/utils/appAssets.dart';
 import 'package:events/utils/app_colors.dart';
 import 'package:events/utils/app_routes.dart';
 import 'package:events/utils/app_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,8 +16,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController(
+      text: "yasen.ehab.23093@gmail.com"
+  );
+  TextEditingController passwordController = TextEditingController(
+      text: "Yasenedres258y"
+  );
 
   @override
   Widget build(BuildContext context) {
