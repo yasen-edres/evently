@@ -7,11 +7,19 @@ import 'package:events/providers/app_theme_provider.dart';
 import 'package:events/ui/onboarding/onboarding_screen.dart';
 import 'package:events/utils/app_routes.dart';
 import 'package:events/utils/app_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding
+      .ensureInitialized(); //sure all initialize before run app.
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MultiProvider(
       providers: [
