@@ -1,12 +1,13 @@
+import 'package:events/firebase_utils.dart';
 import 'package:events/home/add_event/widget/date_or_time_widget.dart';
 import 'package:events/home/taps/home/widget/event_tab_item.dart';
 import 'package:events/home/widget/custom_elevated_button.dart';
 import 'package:events/home/widget/custom_text_form_field.dart';
 import 'package:events/l10n/app_localizations.dart';
+import 'package:events/model/event.dart';
 import 'package:events/utils/appAssets.dart';
 import 'package:events/utils/app_colors.dart';
 import 'package:events/utils/app_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -19,6 +20,8 @@ class AddEvent extends StatefulWidget {
 
 class _AddEventState extends State<AddEvent> {
   int selectedIndex = 0;
+  String selectedEventName = '';
+  String selectedEventImage = '';
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   DateTime? selectedDate;
@@ -82,6 +85,8 @@ class _AddEventState extends State<AddEvent> {
                       return InkWell(
                         onTap: () {
                           selectedIndex = index;
+                          selectedEventName = eventsNameList[index];
+                          selectedEventImage = eventImagesList[index];
                           setState(() {});
                         },
                         child: EventTabItem(
@@ -249,6 +254,20 @@ class _AddEventState extends State<AddEvent> {
   void addEvent() {
     if (formKey.currentState?.validate() == true) {
       //todo: add event in firestore.
+      Event event = Event(title: titleController.text,
+        description: descriptionController.text,
+        eventName: selectedEventName,
+        eventDateTime: selectedDate!,
+        eventImage: selectedEventImage,
+        eventTime: formatTime,
+      );
+      FirebaseUtils.addEventToFireStore(event).timeout(Duration(seconds: 1),
+          onTimeout: () {
+            //todo: alert dialog - toast - snack bar
+            print("Event Add Succsefull");
+            Navigator.pop(context);
+          }
+      );
     }
   }
 }
