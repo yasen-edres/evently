@@ -45,5 +45,6 @@
     "choose_time": "اختر الوقت",
     "location": "الموقع",
     "choose_event_location": "اختر موقع الحدث",
-    "add_event": "إضافة حدث"
+    "add_event": "إضافة حدث",
+    "no_events_found":"لم يتم العثور على أحداث"
 }

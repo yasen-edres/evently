@@ -1,11 +1,12 @@
 import 'package:events/home/taps/home/widget/event_item.dart';
 import 'package:events/home/taps/home/widget/event_tab_item.dart';
 import 'package:events/l10n/app_localizations.dart';
+import 'package:events/providers/event_list_provider.dart';
 import 'package:events/utils/appAssets.dart';
 import 'package:events/utils/app_colors.dart';
 import 'package:events/utils/app_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeTap extends StatefulWidget {
   HomeTap({super.key});
@@ -16,11 +17,23 @@ class HomeTap extends StatefulWidget {
 
 class _HomeTapState extends State<HomeTap> {
   int selectedIndex = 0;
+  late EventListProvider eventListProvider;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      eventListProvider.getAllEvents();
+    },); //todo: wait to define eventListProvider in build
+
+  }
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    eventListProvider = Provider.of<EventListProvider>(context);
     List<String> eventsNameList = [
       AppLocalizations.of(context)!.sport,
       AppLocalizations.of(context)!.birthday,
@@ -127,15 +140,25 @@ class _HomeTapState extends State<HomeTap> {
             ),
           ),
           Expanded(
-            child: ListView.separated(
+            child: eventListProvider.eventsList.isEmpty ?
+            Center(
+              child: Text(AppLocalizations.of(context)!.no_events_found,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headlineLarge,),
+            ) :
+            ListView.separated(
               padding: EdgeInsets.symmetric(
                 horizontal: width * 0.04,
                 vertical: height * 0.02,
               ),
               itemBuilder: (context, index) {
-                return EventItem();
+                return EventItem(
+                  event: eventListProvider.eventsList[index],
+                );
               },
-              itemCount: 20,
+              itemCount: eventListProvider.eventsList.length,
               separatorBuilder: (context, index) =>
                   SizedBox(height: height * 0.02),
             ),
@@ -144,4 +167,5 @@ class _HomeTapState extends State<HomeTap> {
       ),
     );
   }
+
 }

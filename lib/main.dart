@@ -5,6 +5,7 @@ import 'package:events/home/add_event/add_event.dart';
 import 'package:events/home/home_screen.dart';
 import 'package:events/providers/app_language_provider.dart';
 import 'package:events/providers/app_theme_provider.dart';
+import 'package:events/providers/event_list_provider.dart';
 import 'package:events/ui/onboarding/onboarding_screen.dart';
 import 'package:events/utils/app_routes.dart';
 import 'package:events/utils/app_theme.dart';
@@ -26,7 +27,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AppLanguageProvider()),
-        ChangeNotifierProvider(create: (context) => AppThemeProvider()),
+        ChangeNotifierProvider(create: (context) => AppThemeProvider()),hangeNotifierProvider(create: (context) => EventListProvider()),
       ],
       child: MyApp(),
     ),

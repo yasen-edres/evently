@@ -5,8 +5,6 @@ import 'package:events/utils/app_colors.dart';
 import 'package:events/utils/app_styles.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../home/widget/event_item.dart';
-
 class FavoriteTap extends StatelessWidget {
   FavoriteTap({super.key});
 
@@ -33,7 +31,7 @@ class FavoriteTap extends StatelessWidget {
               child: ListView.separated(
                 padding: EdgeInsets.only(top: height * 0.02),
                 itemBuilder: (context, index) {
-                  return EventItem();
+                  return Container();
                 },
                 itemCount: 20,
                 separatorBuilder: (context, index) =>

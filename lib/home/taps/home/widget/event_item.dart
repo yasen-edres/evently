@@ -2,9 +2,16 @@ import 'package:events/utils/appAssets.dart';
 import 'package:events/utils/app_colors.dart';
 import 'package:events/utils/app_styles.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
+
+import '../../../../model/event.dart';
 
 class EventItem extends StatelessWidget {
-  const EventItem({super.key});
+  final Event event;
+
+  const EventItem({super.key,
+    required this.event
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +24,9 @@ class EventItem extends StatelessWidget {
         border: Border.all(width: 2, color: AppColor.primaryLight),
         image: DecorationImage(
           fit: BoxFit.fill,
-          image: AssetImage(AppAsset.birthDayImage),
+          image: AssetImage(
+              event.eventImage
+          ),
         ),
       ),
       child: Padding(
@@ -41,8 +50,10 @@ class EventItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("22", style: AppStyle.bold20Primary),
-                  Text("Nov", style: AppStyle.bold14primary),
+                  Text('${event.eventDateTime.day}',
+                      style: AppStyle.bold20Primary),
+                  Text(DateFormat('MMM').format(event.eventDateTime),
+                      style: AppStyle.bold14primary),
                 ],
               ),
             ),
@@ -59,7 +70,7 @@ class EventItem extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      "This is a Birthday Party ",
+                      event.title,
                       style: AppStyle.bold14Blak,
                     ),
                   ),
