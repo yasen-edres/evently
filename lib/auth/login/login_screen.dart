@@ -182,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void login() {
     if (formKey.currentState?.validate() == true) {
       //todo: login
-      Navigator.of(context).pushNamed(AppRoute.homeRouteName);
+      Navigator.of(context).pushReplacementNamed(AppRoute.homeRouteName);
     }
   }
 }

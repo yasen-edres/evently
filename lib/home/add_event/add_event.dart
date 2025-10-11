@@ -10,6 +10,9 @@ import 'package:events/utils/app_colors.dart';
 import 'package:events/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/event_list_provider.dart';
 
 class AddEvent extends StatefulWidget {
   AddEvent({super.key});
@@ -28,12 +31,14 @@ class _AddEventState extends State<AddEvent> {
   String formatDate = "";
   TimeOfDay? selectedTime;
   String formatTime = "";
+  late EventListProvider eventListProvider;
   var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    eventListProvider = Provider.of<EventListProvider>(context);
     List<String> eventsNameList = [
       AppLocalizations.of(context)!.sport,
       AppLocalizations.of(context)!.birthday,
@@ -56,6 +61,8 @@ class _AddEventState extends State<AddEvent> {
       AppAsset.holidayImage,
       AppAsset.eatingImage,
     ];
+    selectedEventImage = eventImagesList[selectedIndex];
+    selectedEventName = eventsNameList[selectedIndex];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.transparentColor,
@@ -75,7 +82,7 @@ class _AddEventState extends State<AddEvent> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16),
-                  child: Image.asset(eventImagesList[selectedIndex]),
+                  child: Image.asset(selectedEventImage),
                 ),
                 SizedBox(
                   height: height * 0.07,
@@ -85,8 +92,6 @@ class _AddEventState extends State<AddEvent> {
                       return InkWell(
                         onTap: () {
                           selectedIndex = index;
-                          selectedEventName = eventsNameList[index];
-                          selectedEventImage = eventImagesList[index];
                           setState(() {});
                         },
                         child: EventTabItem(
@@ -265,9 +270,18 @@ class _AddEventState extends State<AddEvent> {
           onTimeout: () {
             //todo: alert dialog - toast - snack bar
             print("Event Add Succsefull");
+            //todo: refresh list to get last event
+            // eventListProvider.getAllEvents();
             Navigator.pop(context);
           }
       );
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    eventListProvider.getAllEvents();
   }
 }
