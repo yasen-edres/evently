@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events/auth/login/login_screen.dart';
 import 'package:events/auth/register/register_screen.dart';
 import 'package:events/home/add_event/add_event.dart';
@@ -20,6 +21,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseFirestore.instance.disableNetwork(); //todo: offline
   runApp(
     MultiProvider(
       providers: [
