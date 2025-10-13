@@ -27,7 +27,8 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AppLanguageProvider()),
-        ChangeNotifierProvider(create: (context) => AppThemeProvider()),hangeNotifierProvider(create: (context) => EventListProvider()),
+        ChangeNotifierProvider(create: (context) => AppThemeProvider()),
+        ChangeNotifierProvider(create: (context) => EventListProvider()),
       ],
       child: MyApp(),
     ),

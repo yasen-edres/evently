@@ -16,7 +16,6 @@ class HomeTap extends StatefulWidget {
 }
 
 class _HomeTapState extends State<HomeTap> {
-  int selectedIndex = 0;
   late EventListProvider eventListProvider;
 
   @override
@@ -34,17 +33,7 @@ class _HomeTapState extends State<HomeTap> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     eventListProvider = Provider.of<EventListProvider>(context);
-    List<String> eventsNameList = [
-      AppLocalizations.of(context)!.sport,
-      AppLocalizations.of(context)!.birthday,
-      AppLocalizations.of(context)!.meeting,
-      AppLocalizations.of(context)!.gaming,
-      AppLocalizations.of(context)!.workShop,
-      AppLocalizations.of(context)!.book_club,
-      AppLocalizations.of(context)!.exhibition,
-      AppLocalizations.of(context)!.holiday,
-      AppLocalizations.of(context)!.eating,
-    ];
+    eventListProvider.getEventsNameList(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -107,18 +96,17 @@ class _HomeTapState extends State<HomeTap> {
                     ],
                   ),
                   DefaultTabController(
-                    length: eventsNameList.length,
+                    length: eventListProvider.eventsNameList.length,
                     child: TabBar(
                       onTap: (index) {
-                        selectedIndex = index;
-                        setState(() {});
+                        eventListProvider.changeSelectedIndex(index);
                       },
                       isScrollable: true,
                       labelPadding: EdgeInsets.zero,
                       tabAlignment: TabAlignment.start,
                       indicatorColor: AppColor.transparentColor,
                       dividerColor: AppColor.transparentColor,
-                      tabs: eventsNameList
+                      tabs: eventListProvider.eventsNameList
                           .map(
                             (e) => EventTabItem(
                               borderColor: Theme.of(context).focusColor,
@@ -128,7 +116,8 @@ class _HomeTapState extends State<HomeTap> {
                               ).textTheme.headlineMedium!,
                               unSelectedTextStyle: AppStyle.medium16White,
                               isSelected:
-                                  selectedIndex == eventsNameList.indexOf(e),
+                              eventListProvider.selectedIndex ==
+                                  eventListProvider.eventsNameList.indexOf(e),
                               eventName: e,
                             ),
                           )
@@ -140,7 +129,7 @@ class _HomeTapState extends State<HomeTap> {
             ),
           ),
           Expanded(
-            child: eventListProvider.eventsList.isEmpty ?
+            child: eventListProvider.filterEventList.isEmpty ?
             Center(
               child: Text(AppLocalizations.of(context)!.no_events_found,
                 style: Theme
@@ -155,10 +144,10 @@ class _HomeTapState extends State<HomeTap> {
               ),
               itemBuilder: (context, index) {
                 return EventItem(
-                  event: eventListProvider.eventsList[index],
+                  event: eventListProvider.filterEventList[index],
                 );
               },
-              itemCount: eventListProvider.eventsList.length,
+              itemCount: eventListProvider.filterEventList.length,
               separatorBuilder: (context, index) =>
                   SizedBox(height: height * 0.02),
             ),
