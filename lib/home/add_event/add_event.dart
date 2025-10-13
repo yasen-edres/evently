@@ -8,6 +8,7 @@ import 'package:events/model/event.dart';
 import 'package:events/utils/appAssets.dart';
 import 'package:events/utils/app_colors.dart';
 import 'package:events/utils/app_styles.dart';
+import 'package:events/utils/toast_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -269,7 +270,12 @@ class _AddEventState extends State<AddEvent> {
       FirebaseUtils.addEventToFireStore(event).timeout(Duration(seconds: 1),
           onTimeout: () {
             //todo: alert dialog - toast - snack bar
-            print("Event Add Succsefull");
+            ToastUtils.showToastMessage(
+              message: 'Event Added Successfully',
+              backgroundColor: AppColor.primaryLight,
+              textColor: AppColor.whiteColor,
+            );
+            print('yassin');
             //todo: refresh list to get last event
             // eventListProvider.getAllEvents();
             Navigator.pop(context);

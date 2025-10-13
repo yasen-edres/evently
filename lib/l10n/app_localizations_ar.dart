@@ -155,4 +155,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get all => 'الجميع';
+
+  @override
+  String get no_favourite_event_found => 'لم يتم العثور على حدث مفضل';
 }

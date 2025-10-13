@@ -47,5 +47,6 @@
     "choose_event_location":"Choose Event Location",
     "add_event":"Add Event",
     "no_events_found":"No Events Found",
-    "all":"All"
+    "all":"All",
+    "no_favourite_event_found":"No Favourite Event Found"
 }
