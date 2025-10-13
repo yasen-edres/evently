@@ -275,7 +275,6 @@ class _AddEventState extends State<AddEvent> {
               backgroundColor: AppColor.primaryLight,
               textColor: AppColor.whiteColor,
             );
-            print('yassin');
             //todo: refresh list to get last event
             // eventListProvider.getAllEvents();
             Navigator.pop(context);
