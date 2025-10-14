@@ -5,6 +5,8 @@ import 'package:events/utils/appAssets.dart';
 import 'package:events/utils/app_colors.dart';
 import 'package:events/utils/app_routes.dart';
 import 'package:events/utils/app_styles.dart';
+import 'package:events/utils/dialog_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,7 +19,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController(
-      text: "yasen.ehab.23093@gmail.com"
+      text: "yassin@gmail.com"
   );
   TextEditingController passwordController = TextEditingController(
       text: "Yasenedres258y"
@@ -179,10 +181,52 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void login() {
+  void login() async {
     if (formKey.currentState?.validate() == true) {
       //todo: login
-      Navigator.of(context).pushReplacementNamed(AppRoute.homeRouteName);
+      //todo: 1- show loading
+      DialogUtils.showLoading(context: context, message: 'lodaing...');
+      try {
+        final credential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+            email: emailController.text,
+            password: passwordController.text
+        );
+        //todo: 2- hide loading
+        DialogUtils.hideLoading(context: context);
+        //todo: 3- show message
+        DialogUtils.showMessage(context: context,
+            message: 'Login Successfully.',
+            title: 'Success',
+            posActionName: 'Ok',
+            posAction: () {
+              Navigator.of(context).pushReplacementNamed(
+                AppRoute.homeRouteName,
+              );
+            }
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'invalid-credential') {
+          //todo: 2- hide loading
+          DialogUtils.hideLoading(context: context);
+          //todo: 3- show message
+          DialogUtils.showMessage(context: context,
+            message: 'Wrong email or password',
+            title: 'Error',
+            posActionName: 'Ok',
+          );
+        }
+      }
+      catch (e) {
+        //todo: 2- hide loading
+        DialogUtils.hideLoading(context: context);
+        //todo: 3- show message
+        DialogUtils.showMessage(context: context,
+          message: e.toString(),
+          title: 'Error',
+          posActionName: 'Ok',
+        );
+      }
     }
   }
 }

@@ -5,7 +5,8 @@ import 'package:events/utils/appAssets.dart';
 import 'package:events/utils/app_colors.dart';
 import 'package:events/utils/app_routes.dart';
 import 'package:events/utils/app_styles.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:events/utils/dialog_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -156,12 +157,61 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void register() {
+  void register() async {
     if (formKey.currentState?.validate() == true) {
       //todo: register
-      Navigator.of(
-        context,
-      ).pushNamedAndRemoveUntil(AppRoute.homeRouteName, (route) => false);
+      //todo: 1- show loading
+      DialogUtils.showLoading(context: context, message: 'waiting...');
+      try {
+        final credential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        //todo: 2- hide loading
+        DialogUtils.hideLoading(context: context);
+        //todo: 3- show message
+        DialogUtils.showMessage(context: context,
+            message: 'Register Successfully.',
+            title: 'Success',
+            posActionName: 'Ok',
+            posAction: () {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                AppRoute.homeRouteName,
+                    (route) => false,
+              );
+            }
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          //todo: 2- hide loading
+          DialogUtils.hideLoading(context: context);
+          //todo: 3- show message
+          DialogUtils.showMessage(context: context,
+            message: 'the password provided is too weak.',
+            title: 'Error',
+            posActionName: 'Ok',
+          );
+        } else if (e.code == 'email-already-in-use') {
+          //todo: 2- hide loading
+          DialogUtils.hideLoading(context: context);
+          //todo: 3- show message
+          DialogUtils.showMessage(context: context,
+            message: 'The account already exists for that email.',
+            title: 'Error',
+            posActionName: 'Ok',
+          );
+        }
+      } catch (e) {
+        //todo: 2- hide loading
+        DialogUtils.hideLoading(context: context);
+        //todo: 3- show message
+        DialogUtils.showMessage(context: context,
+          message: e.toString(),
+          title: 'Error',
+          posActionName: 'Ok',
+        );
+      }
     }
   }
 }
