@@ -1,6 +1,9 @@
+import 'package:events/firebase_utils.dart';
 import 'package:events/home/widget/custom_elevated_button.dart';
 import 'package:events/home/widget/custom_text_form_field.dart';
 import 'package:events/l10n/app_localizations.dart';
+import 'package:events/providers/event_list_provider.dart';
+import 'package:events/providers/user_provider.dart';
 import 'package:events/utils/appAssets.dart';
 import 'package:events/utils/app_colors.dart';
 import 'package:events/utils/app_routes.dart';
@@ -8,6 +11,7 @@ import 'package:events/utils/app_styles.dart';
 import 'package:events/utils/dialog_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
@@ -192,6 +196,21 @@ class _LoginScreenState extends State<LoginScreen> {
             email: emailController.text,
             password: passwordController.text
         );
+        //todo: read user from firebaseFireStore
+        var user = await FirebaseUtils.readUserFromFireStore(
+            credential.user?.uid ?? '');
+        if (user == null) {
+          return;
+        }
+        //todo: save user in provider
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.updateUser(user);
+        //todo: selected index = 0 => call getAllEvents
+        var eventListProvider = Provider.of<EventListProvider>(
+            context, listen: false);
+        eventListProvider.changeSelectedIndex(0, userProvider.currentUser!.id);
+        eventListProvider.getAllFavouriteEvents(userProvider.currentUser!.id);
+
         //todo: 2- hide loading
         DialogUtils.hideLoading(context: context);
         //todo: 3- show message

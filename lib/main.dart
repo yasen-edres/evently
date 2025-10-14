@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events/auth/login/login_screen.dart';
 import 'package:events/auth/register/register_screen.dart';
 import 'package:events/home/add_event/add_event.dart';
@@ -6,6 +5,7 @@ import 'package:events/home/home_screen.dart';
 import 'package:events/providers/app_language_provider.dart';
 import 'package:events/providers/app_theme_provider.dart';
 import 'package:events/providers/event_list_provider.dart';
+import 'package:events/providers/user_provider.dart';
 import 'package:events/ui/onboarding/onboarding_screen.dart';
 import 'package:events/utils/app_routes.dart';
 import 'package:events/utils/app_theme.dart';
@@ -22,13 +22,14 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await FirebaseFirestore.instance.disableNetwork(); //todo: offline
+  // await FirebaseFirestore.instance.disableNetwork(); //todo: offline
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AppLanguageProvider()),
         ChangeNotifierProvider(create: (context) => AppThemeProvider()),
         ChangeNotifierProvider(create: (context) => EventListProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
       ],
       child: MyApp(),
     ),

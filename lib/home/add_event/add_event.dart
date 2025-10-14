@@ -5,6 +5,7 @@ import 'package:events/home/widget/custom_elevated_button.dart';
 import 'package:events/home/widget/custom_text_form_field.dart';
 import 'package:events/l10n/app_localizations.dart';
 import 'package:events/model/event.dart';
+import 'package:events/providers/user_provider.dart';
 import 'package:events/utils/appAssets.dart';
 import 'package:events/utils/app_colors.dart';
 import 'package:events/utils/app_styles.dart';
@@ -33,12 +34,14 @@ class _AddEventState extends State<AddEvent> {
   TimeOfDay? selectedTime;
   String formatTime = "";
   late EventListProvider eventListProvider;
+  late UserProvider userProvider;
   var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    userProvider = Provider.of<UserProvider>(context);
     eventListProvider = Provider.of<EventListProvider>(context);
     List<String> eventsNameList = [
       AppLocalizations.of(context)!.sport,
@@ -267,19 +270,33 @@ class _AddEventState extends State<AddEvent> {
         eventImage: selectedEventImage,
         eventTime: formatTime,
       );
-      FirebaseUtils.addEventToFireStore(event).timeout(Duration(seconds: 1),
-          onTimeout: () {
-            //todo: alert dialog - toast - snack bar
-            ToastUtils.showToastMessage(
-              message: 'Event Added Successfully',
-              backgroundColor: AppColor.primaryLight,
-              textColor: AppColor.whiteColor,
-            );
-            //todo: refresh list to get last event
-            // eventListProvider.getAllEvents();
-            Navigator.pop(context);
-          }
-      );
+      FirebaseUtils.addEventToFireStore(
+        event,
+        userProvider.currentUser!.id,
+      ).then((value) {
+        //todo: alert dialog - toast - snack bar
+        ToastUtils.showToastMessage(
+          message: 'Event Added Successfully',
+          backgroundColor: AppColor.primaryLight,
+          textColor: AppColor.whiteColor,
+        );
+        //todo: refresh list to get last event
+        // eventListProvider.getAllEvents();
+        Navigator.pop(context);
+      });
+      //     .timeout(Duration(seconds: 1),
+      //     onTimeout: () {
+      //       //todo: alert dialog - toast - snack bar
+      //       ToastUtils.showToastMessage(
+      //         message: 'Event Added Successfully',
+      //         backgroundColor: AppColor.primaryLight,
+      //         textColor: AppColor.whiteColor,
+      //       );
+      //       //todo: refresh list to get last event
+      //       // eventListProvider.getAllEvents();
+      //       Navigator.pop(context);
+      //     }
+      // );
     }
   }
 
@@ -287,6 +304,6 @@ class _AddEventState extends State<AddEvent> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    eventListProvider.getAllEvents();
+    eventListProvider.getAllEvents(userProvider.currentUser!.id);
   }
 }

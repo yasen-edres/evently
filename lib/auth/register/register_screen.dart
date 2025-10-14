@@ -1,6 +1,8 @@
+import 'package:events/firebase_utils.dart';
 import 'package:events/home/widget/custom_elevated_button.dart';
 import 'package:events/home/widget/custom_text_form_field.dart';
 import 'package:events/l10n/app_localizations.dart';
+import 'package:events/model/my_user.dart';
 import 'package:events/utils/appAssets.dart';
 import 'package:events/utils/app_colors.dart';
 import 'package:events/utils/app_routes.dart';
@@ -8,6 +10,10 @@ import 'package:events/utils/app_styles.dart';
 import 'package:events/utils/dialog_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/event_list_provider.dart';
+import '../../providers/user_provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   RegisterScreen({super.key});
@@ -168,6 +174,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
           email: emailController.text,
           password: passwordController.text,
         );
+        //todo: save user in firebaseFirestore.
+        MyUser myUser = MyUser(
+            id: credential.user?.uid ?? '',
+            name: nameController.text,
+            email: emailController.text
+        );
+        await FirebaseUtils.addUserToFireStore(myUser);
+        //todo: save user in provider
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.updateUser(myUser);
+        //todo: selected index = 0 => call getAllEvents
+        var eventListProvider = Provider.of<EventListProvider>(
+            context, listen: false);
+        eventListProvider.changeSelectedIndex(0, userProvider.currentUser!.id);
+        eventListProvider.getAllFavouriteEvents(userProvider.currentUser!.id);
+
         //todo: 2- hide loading
         DialogUtils.hideLoading(context: context);
         //todo: 3- show message

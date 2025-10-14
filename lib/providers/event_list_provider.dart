@@ -31,10 +31,10 @@ class EventListProvider extends ChangeNotifier {
   }
 
   //todo: function
-  void getAllEvents() async {
+  void getAllEvents(String uId) async {
     //todo: get all events
     QuerySnapshot<Event> querySnapshot =
-        await FirebaseUtils.getEventCollection().get();
+    await FirebaseUtils.getEventCollection(uId).get();
     eventsList = querySnapshot.docs.map((doc) {
       return doc.data();
     }).toList();
@@ -49,10 +49,10 @@ class EventListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getFilterEvents() async {
+  void getFilterEvents(String uId) async {
     //todo: get all events
     QuerySnapshot<Event> querySnapshot = await FirebaseUtils
-        .getEventCollection().get();
+        .getEventCollection(uId).get();
     eventsList = querySnapshot.docs.map((doc) {
       return doc.data();
     },).toList();
@@ -69,9 +69,9 @@ class EventListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getFilterEventsFromFirestore() async {
+  void getFilterEventsFromFirestore(String uId) async {
     QuerySnapshot<Event> querySnapshot = await FirebaseUtils
-        .getEventCollection()
+        .getEventCollection(uId)
     //todo: sorting events
         .orderBy('event_date_time')
     //todo: filtering events
@@ -82,12 +82,12 @@ class EventListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateIsFavouriteEvent(Event event) {
+  void updateIsFavouriteEvent(Event event, String uId) {
     //todo: 1- update is favourite events
-    FirebaseUtils.getEventCollection().doc(event.id)
+    FirebaseUtils.getEventCollection(uId).doc(event.id)
         .update({
       'is_favorite': !event.isFavorite})
-        .timeout(Duration(seconds: 1), onTimeout: () {
+        .then((value) {
       //todo: alert dialog - toast - snack bar
       ToastUtils.showToastMessage(
         message: 'Event Updated Successfully',
@@ -96,17 +96,17 @@ class EventListProvider extends ChangeNotifier {
       );
     },);
     //todo: 2- get all event ,filter event
-    selectedIndex == 0 ? getAllEvents() : getFilterEvents();
+    selectedIndex == 0 ? getAllEvents(uId) : getFilterEvents(uId);
     //todo: 3- get all favourite event
     // getAllFavouriteEvents();
-    getAllFavouriteEventsFromFirestore();
+    getAllFavouriteEventsFromFirestore(uId);
     notifyListeners();
   }
 
-  void getAllFavouriteEvents() async {
+  void getAllFavouriteEvents(String uId) async {
     //todo: get all event
     QuerySnapshot<Event> querySnapshot = await FirebaseUtils
-        .getEventCollection().get();
+        .getEventCollection(uId).get();
     eventsList = querySnapshot.docs.map((doc) {
       return doc.data();
     },).toList();
@@ -123,9 +123,9 @@ class EventListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getAllFavouriteEventsFromFirestore() async {
+  void getAllFavouriteEventsFromFirestore(String uId) async {
     QuerySnapshot<Event> querySnapshot = await FirebaseUtils
-        .getEventCollection()
+        .getEventCollection(uId)
     //todo: sorting events
         .orderBy('event_date_time')
     //todo: filtering events
@@ -138,8 +138,8 @@ class EventListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeSelectedIndex(int newSelectedIndex) {
+  void changeSelectedIndex(int newSelectedIndex, String uId) {
     selectedIndex = newSelectedIndex;
-    selectedIndex == 0 ? getAllEvents() : getFilterEventsFromFirestore();
+    selectedIndex == 0 ? getAllEvents(uId) : getFilterEventsFromFirestore(uId);
   }
 }

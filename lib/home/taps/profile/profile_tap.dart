@@ -5,12 +5,13 @@ import 'package:events/l10n/app_localizations.dart';
 import 'package:events/providers/app_theme_provider.dart';
 import 'package:events/utils/appAssets.dart';
 import 'package:events/utils/app_colors.dart';
+import 'package:events/utils/app_routes.dart';
 import 'package:events/utils/app_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/app_language_provider.dart';
+import '../../../providers/user_provider.dart';
 
 class ProfileTap extends StatefulWidget {
   const ProfileTap({super.key});
@@ -24,6 +25,8 @@ class _ProfileTapState extends State<ProfileTap> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    var userProvider = Provider.of<UserProvider>(context);
+
     var languageProvider = Provider.of<AppLanguageProvider>(context);
     var themeProvider = Provider.of<AppThemeProvider>(context);
     return Scaffold(
@@ -42,8 +45,10 @@ class _ProfileTapState extends State<ProfileTap> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Route Academy", style: AppStyle.bold24White),
-                  Text("route@gmail.com", style: AppStyle.medium16White),
+                  Text(userProvider.currentUser!.name,
+                      style: AppStyle.bold24White),
+                  Text(userProvider.currentUser!.email,
+                      style: AppStyle.medium16White),
                 ],
               ),
             ],
@@ -135,6 +140,10 @@ class _ProfileTapState extends State<ProfileTap> {
             CustomElevatedButton(
               onPressed: () {
                 //todo: logout
+                
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  AppRoute.loginRouteName,
+                      (route) => false,);
               },
               backgroundColor: AppColor.redColor,
               hasIcon: true,
