@@ -40,4 +40,5 @@ class AppAsset {
   static const String iconDate = 'assets/images/icon_date.png';
   static const String iconTime = 'assets/images/icon_time.png';
   static const String iconLocation = 'assets/images/icon_location.png';
+  static const String launcherIcon = 'assets/images/launcher_icon.png';
 }

@@ -1,4 +1,5 @@
 import 'package:events/providers/event_list_provider.dart';
+import 'package:events/providers/user_provider.dart';
 import 'package:events/utils/appAssets.dart';
 import 'package:events/utils/app_colors.dart';
 import 'package:events/utils/app_styles.dart';
@@ -19,6 +20,7 @@ class EventItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    var userProvider = Provider.of<UserProvider>(context);
     var eventListProvider = Provider.of<EventListProvider>(context);
     return Container(
       height: height * 0.25,
@@ -79,7 +81,8 @@ class EventItem extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      eventListProvider.updateIsFavouriteEvent(event);
+                      eventListProvider.updateIsFavouriteEvent(
+                          event, userProvider.currentUser!.id);
                     },
                     child: event.isFavorite == true ?
                     Image.asset(

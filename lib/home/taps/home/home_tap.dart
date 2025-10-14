@@ -2,6 +2,7 @@ import 'package:events/home/taps/home/widget/event_item.dart';
 import 'package:events/home/taps/home/widget/event_tab_item.dart';
 import 'package:events/l10n/app_localizations.dart';
 import 'package:events/providers/event_list_provider.dart';
+import 'package:events/providers/user_provider.dart';
 import 'package:events/utils/appAssets.dart';
 import 'package:events/utils/app_colors.dart';
 import 'package:events/utils/app_styles.dart';
@@ -17,13 +18,14 @@ class HomeTap extends StatefulWidget {
 
 class _HomeTapState extends State<HomeTap> {
   late EventListProvider eventListProvider;
+  late UserProvider userProvider;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      eventListProvider.getAllEvents();
+      eventListProvider.getAllEvents(userProvider.currentUser!.id);
     },); //todo: wait to define eventListProvider in build
 
   }
@@ -32,6 +34,7 @@ class _HomeTapState extends State<HomeTap> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    userProvider = Provider.of<UserProvider>(context);
     eventListProvider = Provider.of<EventListProvider>(context);
     eventListProvider.getEventsNameList(context);
     return Scaffold(
@@ -47,7 +50,8 @@ class _HomeTapState extends State<HomeTap> {
                   AppLocalizations.of(context)!.welcome_back,
                   style: AppStyle.regular14White,
                 ),
-                Text("Route Academy", style: AppStyle.bold24White),
+                Text(userProvider.currentUser!.name,
+                    style: AppStyle.bold24White),
               ],
             ),
             Row(
@@ -99,7 +103,8 @@ class _HomeTapState extends State<HomeTap> {
                     length: eventListProvider.eventsNameList.length,
                     child: TabBar(
                       onTap: (index) {
-                        eventListProvider.changeSelectedIndex(index);
+                        eventListProvider.changeSelectedIndex(
+                            index, userProvider.currentUser!.id);
                       },
                       isScrollable: true,
                       labelPadding: EdgeInsets.zero,

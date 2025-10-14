@@ -2,6 +2,7 @@ import 'package:events/home/taps/home/widget/event_item.dart';
 import 'package:events/home/widget/custom_text_form_field.dart';
 import 'package:events/l10n/app_localizations.dart';
 import 'package:events/providers/event_list_provider.dart';
+import 'package:events/providers/user_provider.dart';
 import 'package:events/utils/appAssets.dart';
 import 'package:events/utils/app_colors.dart';
 import 'package:events/utils/app_styles.dart';
@@ -18,13 +19,14 @@ class FavoriteTap extends StatefulWidget {
 class _FavoriteTapState extends State<FavoriteTap> {
   TextEditingController searchController = TextEditingController();
   late EventListProvider eventListProvider;
+  late UserProvider userProvider;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      eventListProvider.getAllFavouriteEvents();
+      eventListProvider.getAllFavouriteEvents(userProvider.currentUser!.id);
       // eventListProvider.getAllFavouriteEventsFromFirestore();
     });
   }
@@ -33,6 +35,7 @@ class _FavoriteTapState extends State<FavoriteTap> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    userProvider = Provider.of<UserProvider>(context);
     eventListProvider = Provider.of<EventListProvider>(context);
     return SafeArea(
       child: Padding(
