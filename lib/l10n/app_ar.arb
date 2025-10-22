@@ -48,5 +48,8 @@
     "add_event": "إضافة حدث",
     "no_events_found":"لم يتم العثور على أحداث",
     "all":"الجميع",
-    "no_favourite_event_found":"لم يتم العثور على حدث مفضل"
+    "no_favourite_event_found":"لم يتم العثور على حدث مفضل",
+    "personalize_your_experience": "خصّص تجربتك",
+    "onboarding_des": "اختر النمط واللغة المفضلين لديك لبدء تجربة مريحة ومخصصة تناسب أسلوبك.",
+    "lets_start": "لنبدأ"
 }

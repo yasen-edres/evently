@@ -158,4 +158,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get no_favourite_event_found => 'لم يتم العثور على حدث مفضل';
+
+  @override
+  String get personalize_your_experience => 'خصّص تجربتك';
+
+  @override
+  String get onboarding_des =>
+      'اختر النمط واللغة المفضلين لديك لبدء تجربة مريحة ومخصصة تناسب أسلوبك.';
+
+  @override
+  String get lets_start => 'لنبدأ';
 }

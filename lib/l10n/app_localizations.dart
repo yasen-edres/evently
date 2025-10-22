@@ -397,6 +397,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No Favourite Event Found'**
   String get no_favourite_event_found;
+
+  /// No description provided for @personalize_your_experience.
+  ///
+  /// In en, this message translates to:
+  /// **'Personalize Your Experience'**
+  String get personalize_your_experience;
+
+  /// No description provided for @onboarding_des.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your preferred theme and language to get started with a comfortable, tailored experience that suits your style.'**
+  String get onboarding_des;
+
+  /// No description provided for @lets_start.
+  ///
+  /// In en, this message translates to:
+  /// **'Let’s Start'**
+  String get lets_start;
 }
 
 class _AppLocalizationsDelegate

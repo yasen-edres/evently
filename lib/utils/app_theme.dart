@@ -49,7 +49,6 @@ class AppTheme {
     indicatorColor: AppColor.whiteColor,
     splashColor: AppColor.primaryLight,
     cardColor: AppColor.whiteColor,
-
     scaffoldBackgroundColor: AppColor.primaryDark,
     appBarTheme: AppBarTheme(
       iconTheme: IconThemeData(color: AppColor.primaryLight),

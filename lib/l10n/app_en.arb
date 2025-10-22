@@ -48,5 +48,8 @@
     "add_event":"Add Event",
     "no_events_found":"No Events Found",
     "all":"All",
-    "no_favourite_event_found":"No Favourite Event Found"
+    "no_favourite_event_found":"No Favourite Event Found",
+    "personalize_your_experience":"Personalize Your Experience",
+    "onboarding_des":"Choose your preferred theme and language to get started with a comfortable, tailored experience that suits your style.",
+    "lets_start":"Let’s Start"
 }
