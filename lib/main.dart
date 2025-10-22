@@ -3,6 +3,7 @@ import 'package:events/auth/register/register_screen.dart';
 import 'package:events/home/add_event/add_event.dart';
 import 'package:events/home/home_screen.dart';
 import 'package:events/onboarding/onboarding_screen.dart';
+import 'package:events/onboarding/onboarding_widget.dart';
 import 'package:events/providers/app_language_provider.dart';
 import 'package:events/providers/app_theme_provider.dart';
 import 'package:events/providers/event_list_provider.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         AppRoute.loginRouteName: (context) => (LoginScreen()),
         AppRoute.registerRouteName: (context) => (RegisterScreen()),
         AppRoute.addEventRouteName: (context) => (AddEvent()),
+        AppRoute.onboardingWidget: (context) => (OnboardingWidget()),
       },
       locale: Locale(languageProvider.appLanguage),
       localizationsDelegates: AppLocalizations.localizationsDelegates,

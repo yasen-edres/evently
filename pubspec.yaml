@@ -45,6 +45,8 @@ dependencies:
   firebase_auth: ^6.1.1
   flutter_launcher_icons: "^0.14.4"
   flutter_switch: ^0.3.2
+  introduction_screen: ^4.0.0
+  smooth_page_indicator: ^1.2.1
 flutter_launcher_icons:
   android: true
   ios: true

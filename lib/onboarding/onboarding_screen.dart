@@ -2,6 +2,7 @@ import 'package:events/home/widget/custom_elevated_button.dart';
 import 'package:events/l10n/app_localizations.dart';
 import 'package:events/utils/appAssets.dart';
 import 'package:events/utils/app_colors.dart';
+import 'package:events/utils/app_routes.dart';
 import 'package:events/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
@@ -137,7 +138,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
               SizedBox(height: height * 0.02),
               CustomElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  //todo: Navigator to onboardingWidget
+                  Navigator.of(context).pushReplacementNamed(
+                      AppRoute.onboardingWidget);
+                },
                 text: AppLocalizations.of(context)!.lets_start,
                 textStyle: AppStyle.medium20White,
               ),
