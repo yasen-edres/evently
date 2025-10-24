@@ -1,6 +1,8 @@
 import 'package:events/home/taps/home/widget/event_item.dart';
 import 'package:events/home/taps/home/widget/event_tab_item.dart';
 import 'package:events/l10n/app_localizations.dart';
+import 'package:events/providers/app_language_provider.dart';
+import 'package:events/providers/app_theme_provider.dart';
 import 'package:events/providers/event_list_provider.dart';
 import 'package:events/providers/user_provider.dart';
 import 'package:events/utils/appAssets.dart';
@@ -37,6 +39,8 @@ class _HomeTapState extends State<HomeTap> {
     userProvider = Provider.of<UserProvider>(context);
     eventListProvider = Provider.of<EventListProvider>(context);
     eventListProvider.getEventsNameList(context);
+    var appThemeProvider = Provider.of<AppThemeProvider>(context);
+    var appLanguageProvider = Provider.of<AppLanguageProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -56,18 +60,37 @@ class _HomeTapState extends State<HomeTap> {
             ),
             Row(
               children: [
-                Image.asset(AppAsset.iconTheme),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: width * 0.02,
-                    vertical: height * 0.01,
+                InkWell(
+                    onTap: () {
+                      if (appThemeProvider.appTheme == ThemeMode.light) {
+                        appThemeProvider.changeTheme(ThemeMode.dark);
+                      } else {
+                        appThemeProvider.changeTheme(ThemeMode.light);
+                      }
+                    },
+                    child: Image.asset(AppAsset.iconTheme)
+                ),
+                InkWell(
+                  onTap: () {
+                    if (appLanguageProvider.appLanguage == 'en') {
+                      appLanguageProvider.changeLanguage('ar');
+                    } else {
+                      appLanguageProvider.changeLanguage('en');
+                    }
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: width * 0.02,
+                      vertical: height * 0.01,
+                    ),
+                    margin: EdgeInsetsDirectional.only(start: width * 0.02),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: AppColor.whiteColor,
+                    ),
+                    child: Text(appLanguageProvider.appLanguage.toUpperCase(),
+                        style: AppStyle.bold14primary),
                   ),
-                  margin: EdgeInsetsDirectional.only(start: width * 0.02),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: AppColor.whiteColor,
-                  ),
-                  child: Text("EN", style: AppStyle.bold14primary),
                 ),
               ],
             ),
@@ -96,7 +119,7 @@ class _HomeTapState extends State<HomeTap> {
                     children: [
                       Image.asset(AppAsset.unSelectedIconMap),
                       SizedBox(width: width * 0.02),
-                      Text("Cairo , Egypt", style: AppStyle.medium14White),
+                      Text("Damanhour , Egypt", style: AppStyle.medium14White),
                     ],
                   ),
                   DefaultTabController(
