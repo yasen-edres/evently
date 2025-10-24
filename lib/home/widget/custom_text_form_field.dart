@@ -1,9 +1,7 @@
 import 'package:events/utils/app_styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/app_colors.dart';
-
 typedef onValidator = String? Function(String?)?;
 
 class CustomTextFormField extends StatelessWidget {
