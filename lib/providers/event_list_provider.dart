@@ -99,7 +99,7 @@ class EventListProvider extends ChangeNotifier {
     selectedIndex == 0 ? getAllEvents(uId) : getFilterEvents(uId);
     //todo: 3- get all favourite event
     // getAllFavouriteEvents();
-    getAllFavouriteEventsFromFirestore(uId);
+    getAllFavouriteEvents(uId);
     notifyListeners();
   }
 
