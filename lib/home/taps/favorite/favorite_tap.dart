@@ -9,6 +9,8 @@ import 'package:events/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../model/event.dart';
+
 class FavoriteTap extends StatefulWidget {
   FavoriteTap({super.key});
 
@@ -20,6 +22,7 @@ class _FavoriteTapState extends State<FavoriteTap> {
   TextEditingController searchController = TextEditingController();
   late EventListProvider eventListProvider;
   late UserProvider userProvider;
+  List<Event> filterFavouriteEvent = [];
 
   @override
   void initState() {
@@ -48,6 +51,12 @@ class _FavoriteTapState extends State<FavoriteTap> {
               hintText: AppLocalizations.of(context)!.search_event,
               hintTextStyle: AppStyle.bold14primary,
               prefixIcon: Image.asset(AppAsset.iconSearch),
+              onChange: (value) {
+                searchByName(value);
+                setState(() {
+
+                });
+              },
             ),
             SizedBox(height: height * 0.005),
             Expanded(
@@ -60,6 +69,7 @@ class _FavoriteTapState extends State<FavoriteTap> {
                       .textTheme
                       .headlineLarge,),
               ) :
+              searchController.text == '' ?
               ListView.separated(
                 padding: EdgeInsets.only(top: height * 0.02),
                 itemBuilder: (context, index) {
@@ -69,11 +79,37 @@ class _FavoriteTapState extends State<FavoriteTap> {
                 itemCount: eventListProvider.favouriteEventList.length,
                 separatorBuilder: (context, index) =>
                     SizedBox(height: height * 0.02),
-              ),
+              ) :
+              ListView.separated(
+                padding: EdgeInsets.only(top: height * 0.02),
+                itemBuilder: (context, index) {
+                  return EventItem(
+                      event: filterFavouriteEvent[index]);
+                },
+                itemCount: filterFavouriteEvent.length,
+                separatorBuilder: (context, index) =>
+                    SizedBox(height: height * 0.02),
+              )
+              ,
             ),
           ],
         ),
       ),
     );
+  }
+
+  void searchByName(String text) {
+    setState(() {
+      if (text
+          .trim()
+          .isEmpty) {
+        filterFavouriteEvent.clear();
+      } else {
+        filterFavouriteEvent = eventListProvider.favouriteEventList
+            .where((event) =>
+            event.title.toLowerCase().contains(text.toLowerCase()))
+            .toList();
+      }
+    });
   }
 }

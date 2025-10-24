@@ -12,6 +12,7 @@ class CustomTextFormField extends StatelessWidget {
   TextStyle? labelTextStyle;
   Widget? prefixIcon;
   Widget? suffixIcon;
+  ValueChanged<String>? onChange;
   onValidator? validator;
   TextInputType? keyboardType;
   bool? obscureText;
@@ -27,6 +28,7 @@ class CustomTextFormField extends StatelessWidget {
     this.labelTextStyle,
     this.prefixIcon,
     this.suffixIcon,
+    this.onChange,
     this.validator,
     this.keyboardType,
     this.obscureText = false,
@@ -41,6 +43,7 @@ class CustomTextFormField extends StatelessWidget {
       maxLines: maxLines,
       keyboardType: keyboardType ?? TextInputType.text,
       obscureText: obscureText!,
+      onChanged: onChange,
       controller: controller,
       decoration: InputDecoration(
         enabledBorder: builtDecorationBorder(borderSideColor: borderSideColor),
