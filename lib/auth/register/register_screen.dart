@@ -24,16 +24,10 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController(
-    text: "yassin@gmail.com",
-  );
+  TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController(text: "yassin");
-  TextEditingController passwordController = TextEditingController(
-    text: "Yasenedres258y",
-  );
-  TextEditingController rePasswordController = TextEditingController(
-    text: "Yasenedres258y",
-  );
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController rePasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
