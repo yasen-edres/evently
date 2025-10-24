@@ -3,6 +3,7 @@ class AppAsset {
   static const String onboarding2 = 'assets/images/onboarding2.png';
   static const String onboarding3 = 'assets/images/onboarding3.png';
   static const String onboarding4 = 'assets/images/onboarding4.png';
+  static const String onboardingTitle = 'assets/images/onboarding_title.png';
   static const String routeImage = 'assets/images/route_image.png';
   static const String unSelectedIconHome =
       'assets/images/unSelected_icon_home.png';
@@ -41,4 +42,8 @@ class AppAsset {
   static const String iconTime = 'assets/images/icon_time.png';
   static const String iconLocation = 'assets/images/icon_location.png';
   static const String launcherIcon = 'assets/images/launcher_icon.png';
+  static const String egyptFlag = 'assets/images/egypt_flag.png';
+  static const String usaFlag = 'assets/images/usa_flag.png';
+  static const String sunIcon = 'assets/images/sun_icon.png';
+  static const String moonIcon = 'assets/images/moon_icon.png';
 }

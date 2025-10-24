@@ -2,11 +2,12 @@ import 'package:events/auth/login/login_screen.dart';
 import 'package:events/auth/register/register_screen.dart';
 import 'package:events/home/add_event/add_event.dart';
 import 'package:events/home/home_screen.dart';
+import 'package:events/onboarding/onboarding_screen.dart';
+import 'package:events/onboarding/onboarding_widget.dart';
 import 'package:events/providers/app_language_provider.dart';
 import 'package:events/providers/app_theme_provider.dart';
 import 'package:events/providers/event_list_provider.dart';
 import 'package:events/providers/user_provider.dart';
-import 'package:events/ui/onboarding/onboarding_screen.dart';
 import 'package:events/utils/app_routes.dart';
 import 'package:events/utils/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -43,13 +44,14 @@ class MyApp extends StatelessWidget {
     var themeProvider = Provider.of<AppThemeProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoute.loginRouteName,
+      initialRoute: AppRoute.onboardingScreen,
       routes: {
         AppRoute.onboardingScreen: (context) => (OnboardingScreen()),
         AppRoute.homeRouteName: (context) => (HomeScreen()),
         AppRoute.loginRouteName: (context) => (LoginScreen()),
         AppRoute.registerRouteName: (context) => (RegisterScreen()),
         AppRoute.addEventRouteName: (context) => (AddEvent()),
+        AppRoute.onboardingWidget: (context) => (OnboardingWidget()),
       },
       locale: Locale(languageProvider.appLanguage),
       localizationsDelegates: AppLocalizations.localizationsDelegates,

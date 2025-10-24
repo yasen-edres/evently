@@ -11,7 +11,10 @@ import 'package:events/utils/app_styles.dart';
 import 'package:events/utils/dialog_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+
+import '../../model/my_user.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
@@ -156,8 +159,93 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       SizedBox(height: height * 0.02),
                       CustomElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           //todo: login with google.
+                          //todo: 1- show loading
+                          DialogUtils.showLoading(
+                              context: context, message: 'loading...');
+                          try {
+                            //todo: google sign in
+                            final GoogleSignInAccount? googleUser = await GoogleSignIn()
+                                .signIn();
+                            if (googleUser == null) {
+                              DialogUtils.hideLoading(context: context);
+                              return;
+                            }
+                            //todo: create googleAuth
+                            final GoogleSignInAuthentication googleAuth = await googleUser
+                                .authentication;
+                            final credential = GoogleAuthProvider.credential(
+                              accessToken: googleAuth.accessToken,
+                              idToken: googleAuth.idToken,
+                            );
+                            //todo: take googleAuth data
+                            final userCredential = await FirebaseAuth.instance
+                                .signInWithCredential(credential);
+
+                            //todo: chek if user already exist
+                            var user = await FirebaseUtils
+                                .readUserFromFireStore(
+                              userCredential.user?.uid ?? '',
+                            );
+                            //todo: create new user
+                            if (user == null) {
+                              user = MyUser(
+                                id: userCredential.user!.uid,
+                                name: googleUser.displayName ?? '',
+                                email: googleUser.email,
+                              );
+                              await FirebaseUtils.addUserToFireStore(user);
+                            }
+
+                            //todo: save user in provider
+                            var userProvider = Provider.of<UserProvider>(
+                                context, listen: false);
+                            userProvider.updateUser(user);
+
+                            //todo: selected index = 0 => call getAllEvents
+
+                            var eventListProvider = Provider.of<
+                                EventListProvider>(context, listen: false);
+                            eventListProvider.changeSelectedIndex(
+                                0, userProvider.currentUser!.id);
+                            eventListProvider.getAllFavouriteEvents(
+                                userProvider.currentUser!.id);
+
+                            //todo: 2- hide loading
+                            DialogUtils.hideLoading(context: context);
+                            //todo: 3- show message
+                            DialogUtils.showMessage(
+                              context: context,
+                              message: 'Login Successfully.',
+                              title: 'Success',
+                              posActionName: 'Ok',
+                              posAction: () {
+                                Navigator.of(context).pushReplacementNamed(
+                                    AppRoute.homeRouteName);
+                              },
+                            );
+                          } on FirebaseAuthException catch (e) {
+                            //todo: 2- hide loading
+                            DialogUtils.hideLoading(context: context);
+                            //todo: 3- show message
+                            DialogUtils.showMessage(
+                              context: context,
+                              message: e.message ?? 'Something went wrong.',
+                              title: 'Error',
+                              posActionName: 'Ok',
+                            );
+                          } catch (e) {
+                            //todo: 2- hide loading
+                            DialogUtils.hideLoading(context: context);
+                            //todo: 3- show message
+                            DialogUtils.showMessage(
+                              context: context,
+                              message: e.toString(),
+                              title: 'Error',
+                              posActionName: 'Ok',
+                            );
+                          }
                         },
                         hasIcon: true,
                         backgroundColor: AppColor.transparentColor,

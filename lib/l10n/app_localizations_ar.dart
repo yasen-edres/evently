@@ -158,4 +158,36 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get no_favourite_event_found => 'لم يتم العثور على حدث مفضل';
+
+  @override
+  String get personalize_your_experience => 'خصّص تجربتك';
+
+  @override
+  String get onboarding_des =>
+      'اختر النمط واللغة المفضلين لديك لبدء تجربة مريحة ومخصصة تناسب أسلوبك.';
+
+  @override
+  String get lets_start => 'لنبدأ';
+
+  @override
+  String get find_events_that_inspire_you => 'اكتشف فعاليات تُلهمك';
+
+  @override
+  String get effortless_event_planning => 'تخطيط الفعاليات بسهولة';
+
+  @override
+  String get connect_with_friends_share_moments =>
+      'تواصل مع الأصدقاء وشارك اللحظات';
+
+  @override
+  String get onboarding1_des =>
+      'انغمس في عالم من الفعاليات المصممة لتناسب اهتماماتك الفريدة. سواء كنت من عشاق الموسيقى الحية أو ورش الفنون أو الشبكات المهنية أو مجرد استكشاف تجارب جديدة، لدينا ما يناسب الجميع. تساعدك توصياتنا المختارة بعناية على الاستكشاف والتواصل والاستفادة من كل فرصة من حولك.';
+
+  @override
+  String get onboarding2_des =>
+      'اجعل تنظيم الفعاليات أكثر سهولة باستخدام أدواتنا المتكاملة. من إعداد الدعوات وإدارة الحضور إلى جدولة التذكيرات وتنسيق التفاصيل، نحن نوفر لك كل ما تحتاجه. خطط بسهولة وركّز على الأهم – خلق تجربة لا تُنسى لك ولضيوفك.';
+
+  @override
+  String get onboarding3_des =>
+      'اجعل كل فعالية تجربة لا تُنسى بمشاركتها مع الآخرين. يتيح لك تطبيقنا دعوة الأصدقاء، وإبقاء الجميع على اطلاع، والاحتفال باللحظات معًا. التقط وشارك أجمل اللحظات لتعيش الإثارة مجددًا وتحتفظ بالذكريات الجميلة.';
 }
