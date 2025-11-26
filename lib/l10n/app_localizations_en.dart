@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -162,7 +163,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get personalize_your_experience => 'Personalize Your Experience';
 
   @override
-  String get onboarding_des => 'Choose your preferred theme and language to get started with a comfortable, tailored experience that suits your style.';
+  String get onboarding_des =>
+      'Choose your preferred theme and language to get started with a comfortable, tailored experience that suits your style.';
 
   @override
   String get lets_start => 'Let’s Start';
@@ -174,14 +176,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get effortless_event_planning => 'Effortless Event Planning';
 
   @override
-  String get connect_with_friends_share_moments => 'Connect with Friends & Share Moments';
+  String get connect_with_friends_share_moments =>
+      'Connect with Friends & Share Moments';
 
   @override
-  String get onboarding1_des => 'Dive into a world of events crafted to fit your unique interests. Whether you\'re into live music, art workshops, professional networking, or simply discovering new experiences, we have something for everyone. Our curated recommendations will help you explore, connect, and make the most of every opportunity around you.';
+  String get onboarding1_des =>
+      'Dive into a world of events crafted to fit your unique interests. Whether you\'re into live music, art workshops, professional networking, or simply discovering new experiences, we have something for everyone. Our curated recommendations will help you explore, connect, and make the most of every opportunity around you.';
 
   @override
-  String get onboarding2_des => 'Take the hassle out of organizing events with our all-in-one planning tools. From setting up invites and managing RSVPs to scheduling reminders and coordinating details, we’ve got you covered. Plan with ease and focus on what matters – creating an unforgettable experience for you and your guests.';
+  String get onboarding2_des =>
+      'Take the hassle out of organizing events with our all-in-one planning tools. From setting up invites and managing RSVPs to scheduling reminders and coordinating details, we’ve got you covered. Plan with ease and focus on what matters – creating an unforgettable experience for you and your guests.';
 
   @override
-  String get onboarding3_des => 'Make every event memorable by sharing the experience with others. Our platform lets you invite friends, keep everyone in the loop, and celebrate moments together. Capture and share the excitement with your network, so you can relive the highlights and cherish the memories.';
+  String get onboarding3_des =>
+      'Make every event memorable by sharing the experience with others. Our platform lets you invite friends, keep everyone in the loop, and celebrate moments together. Capture and share the excitement with your network, so you can relive the highlights and cherish the memories.';
 }

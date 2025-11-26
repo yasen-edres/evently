@@ -1,4 +1,5 @@
 import 'package:events/auth/register/register_navigator.dart';
+import 'package:events/utils/app_routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -32,7 +33,12 @@ class RegisterViewModel extends ChangeNotifier {
       //todo: 2- hide loading
       navigator.hideMyLoading();
       //todo: 3- show message
-      navigator.showMyMessage(message: 'Register Successfully.');
+      navigator.showMyMessage(message: 'Register Successfully.',
+          posActionName: 'Ok',
+          posAction: () {
+            navigator.navigator(AppRoute.homeRouteName);
+          });
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         //todo: 2- hide loading

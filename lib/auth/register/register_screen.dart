@@ -20,10 +20,17 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen>
     implements RegisterNavigator {
   final formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController emailController = TextEditingController(
+      text: 'yasen.ehab.23093@gmail.com'
+  );
+  TextEditingController passwordController = TextEditingController(
+      text: 'Yasenedres258y'
+  );
   TextEditingController nameController = TextEditingController(text: "yassin");
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController rePasswordController = TextEditingController();
+
+  TextEditingController rePasswordController = TextEditingController(
+      text: 'Yasenedres258y'
+  );
   RegisterViewModel viewModel = RegisterViewModel();
 
   @override
@@ -189,10 +196,26 @@ class _RegisterScreenState extends State<RegisterScreen>
     DialogUtils.showLoading(context: context, message: message);
   }
 
+
   @override
-  void showMyMessage({required String message}) {
+  void navigator(String route) {
+    // TODO: implement navigator
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      route,
+          (route) => false,
+    );
+  }
+
+  @override
+  void showMyMessage(
+      {required String message, String? title, String? posActionName, Function? posAction, String? negActionName, Function? negAction}) {
     // TODO: implement showMyMessage
-    DialogUtils.showMessage(context: context, message: message,
-        posActionName: 'Ok');
+    DialogUtils.showMessage(context: context,
+        message: message,
+        title: title,
+        posActionName: posActionName,
+        posAction: posAction,
+        negAction: negAction,
+        negActionName: negActionName);
   }
 }

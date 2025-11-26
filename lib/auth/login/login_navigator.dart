@@ -1,4 +1,4 @@
-abstract class RegisterNavigator {
+abstract class LoginNavigator {
   void showMyLoading({required String message});
 
   void hideMyLoading();
